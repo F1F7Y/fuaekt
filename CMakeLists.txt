@@ -13,8 +13,3 @@ find_package(GLEW REQUIRED)
 include_directories(source)
 
 add_subdirectory(source)
-
-add_custom_target(shaders ALL
-                  COMMAND ${CMAKE_COMMAND} -E copy_directory
-                  ${CMAKE_SOURCE_DIR}/shaders ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/shaders
-                 )

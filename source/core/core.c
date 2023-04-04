@@ -22,6 +22,8 @@ void Core_Initilaze() {
     Input_Initilaze();
 
     Shader_LoadDefault();
+
+    // Load first map
 }
 
 void Core_MainLoop() {
