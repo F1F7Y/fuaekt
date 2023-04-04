@@ -3,6 +3,7 @@ add_executable(fuaekt
                core/error.c
                filesystem/filesystem.c
                material/material.c
+               renderer/renderer.c
                renderer/window.c
                main.c
               )

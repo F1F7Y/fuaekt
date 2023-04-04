@@ -7,6 +7,7 @@
 #include "core/logging.h"
 #include "core/error.h"
 #include "material/shader.h"
+#include "renderer/renderer.h"
 #include "renderer/window.h"
 
 void Core_Initilaze() {
@@ -14,10 +15,17 @@ void Core_Initilaze() {
 
     if( !glfwInit() )
         ThrowError( "Failed to initilaze GLFW!" );
-    
+
     Window_Create();
+    Renderer_Initilaze();
 
     Shader_LoadDefault();
+}
+
+void Core_MainLoop() {
+    while( !glfwWindowShouldClose( g_pWindow ) ) {
+        glfwPollEvents();
+    }
 }
 
 void Core_Shutdown() {

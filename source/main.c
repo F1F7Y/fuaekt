@@ -10,10 +10,12 @@
 
 int main( int argc, char *argv[] ) {
     Log_Info( "fuaekt\n" );
+
     Core_Initilaze();
 
-    while(!glfwWindowShouldClose(g_pWindow)) { glfwPollEvents(); }
+    Core_MainLoop();
 
     Core_Shutdown();
+    
     return 0;
 }
