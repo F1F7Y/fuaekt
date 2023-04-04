@@ -6,7 +6,9 @@
 
 #include "core/logging.h"
 #include "core/error.h"
+#include "filesystem/filesystem.h"
 #include "input/input.h"
+#include "map/map.h"
 #include "material/shader.h"
 #include "renderer/renderer.h"
 #include "renderer/window.h"
