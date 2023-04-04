@@ -12,5 +12,9 @@ void Renderer_Initilaze() {
         ThrowError( "Failed to initilaze GLEW!" );
     }
 
+    glEnable( GL_DEPTH_TEST );
+    glCullFace( GL_FRONT );
+    glEnable( GL_CULL_FACE );
+
     Log_Info( "Renderer initilazed!\n" );
 }

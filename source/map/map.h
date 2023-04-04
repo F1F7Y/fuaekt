@@ -11,7 +11,7 @@
 
 typedef struct {
     int numMeshes;
-    Mesh_t *mehses;
+    Mesh_t *meshes;
     GLuint vertexBuffer;
     GLuint indexBuffer;
 } MapInfo_t;
@@ -20,5 +20,6 @@ extern MapInfo_t g_mapInfo;
 
 bool Map_DoesExist( const char *map );
 void Map_LoadMap( const char *map );
+void Map_UnLoad();
 
 #endif // _MAP

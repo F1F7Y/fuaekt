@@ -1,6 +1,8 @@
 #ifndef _MAP_STRUCTS
 #define _MAP_STRUCTS
 
+#include "utils/math.h"
+
 #define UNUSED_0         0
 #define PLANES           1
 #define VERTICES         2
@@ -52,7 +54,7 @@ typedef struct {
 typedef struct {
     int16_t vertexIdx;
     int16_t normalIdx;
-    float uv[2];
+    Vector2f uv;
 } RenderVertex_t;
 
 typedef struct {
@@ -62,9 +64,9 @@ typedef struct {
 typedef struct {
     float mins[3];
     float maxs[3];
-    int16_t firstTri;
-    int16_t numTris;
-    int16_t textureIdx;
+    uint16_t firstTri;
+    uint16_t numTris;
+    int32_t textureIdx;
 } Mesh_t;
 
 typedef struct {

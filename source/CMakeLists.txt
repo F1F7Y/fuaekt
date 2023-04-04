@@ -8,6 +8,7 @@ add_executable(fuaekt
                material/shader.c
                renderer/renderer.c
                renderer/window.c
+               utils/math.c
                main.c
               )
 
