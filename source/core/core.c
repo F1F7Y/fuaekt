@@ -6,6 +6,7 @@
 
 #include "core/logging.h"
 #include "core/error.h"
+#include "input/input.h"
 #include "material/shader.h"
 #include "renderer/renderer.h"
 #include "renderer/window.h"
@@ -18,6 +19,7 @@ void Core_Initilaze() {
 
     Window_Create();
     Renderer_Initilaze();
+    Input_Initilaze();
 
     Shader_LoadDefault();
 }
