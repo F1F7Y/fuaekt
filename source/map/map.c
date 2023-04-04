@@ -5,6 +5,7 @@
 
 #include "core/error.h"
 #include "core/logging.h"
+#include "entities/player.h"
 #include "filesystem/filesystem.h"
 #include "material/shader.h"
 #include "utils/math.h"
@@ -106,9 +107,13 @@ void Map_LoadMap( const char *map ) {
     Log_Info( "Map has: %i meshes\n", g_mapInfo.numMeshes );
 
     Log_Info( "Loading took: %i seconds\n", time(0) - tm );
+
+    Vector3f zero; zero.x = 0.0f; zero.y = 0.0f; zero.z = 0.0f;
+    Player_Create( zero, zero, 50.0f );
 }
 
 void Map_UnLoad() {
     Log_Info( "Map Unload\n" );
+    Player_Delete();
     free( g_mapInfo.meshes );
 }

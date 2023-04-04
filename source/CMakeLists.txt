@@ -1,6 +1,7 @@
 add_executable(fuaekt
                core/core.c
                core/error.c
+               entities/player.c
                filesystem/filesystem.c
                input/input.c
                map/map.c
