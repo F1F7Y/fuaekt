@@ -5,6 +5,7 @@ add_executable(fuaekt
                input/input.c
                map/map.c
                material/material.c
+               material/shader.c
                renderer/renderer.c
                renderer/window.c
                main.c

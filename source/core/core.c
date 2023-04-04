@@ -26,6 +26,7 @@ void Core_Initilaze() {
     Shader_LoadDefault();
 
     // Load first map
+    Map_LoadMap( "maps/test.bsp" );
 }
 
 void Core_MainLoop() {
