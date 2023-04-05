@@ -1,9 +1,8 @@
 # Uni project
 
-Quake + FEKT = fuaekt
-
-except thisll probably become a platformer or smth, idk
-
-
-
-leave me alone
+## Compiling
+- Currently linux only, will do windows when I have time
+```sh
+cmake . -G "Unix Makefiles"
+cmake --build .
+```
