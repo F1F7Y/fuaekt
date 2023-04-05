@@ -22,6 +22,7 @@ static void PlayerCallback_MoveRight_End()    { if( g_pPlayer != NULL ) { g_pPla
 
 static void PlayerCallback_MoveJump()     {  }
 
+
 void Player_Initilaze() {
     Log_Info( "Registering player key callbacks!\n" );
 

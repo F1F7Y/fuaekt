@@ -9,7 +9,6 @@
 #include "core/logging.h"
 #include "renderer/window.h"
 
-
 struct KeyCallbackEntry_t{
     int key;
     int action;
@@ -18,6 +17,8 @@ struct KeyCallbackEntry_t{
 };
 
 struct KeyCallbackEntry_t *g_pCallbacks;
+
+bool bMouseCaptured = false;
 
 static void Input_KeyCallback( GLFWwindow *window, int key, int scancode, int action, int mods ) {
     // Log_Info( "Key callback called!\n" );
@@ -40,9 +41,21 @@ static void Input_KeyCallback( GLFWwindow *window, int key, int scancode, int ac
     }
 }
 
+
+static void InputCallback_ToggleMouseCapture() {
+    if( bMouseCaptured )
+        glfwSetInputMode( g_pWindow, GLFW_CURSOR, GLFW_CURSOR_NORMAL );
+    else
+        glfwSetInputMode( g_pWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED );
+    
+    bMouseCaptured = !bMouseCaptured;
+}
+
 void Input_Initilaze() {
     Log_Info( "Input handler initilazed!\n" );
     glfwSetKeyCallback( g_pWindow, Input_KeyCallback );
+
+    Input_RegisterKeyCallback( GLFW_KEY_ESCAPE, GLFW_PRESS, InputCallback_ToggleMouseCapture );
 }
 
 void Input_RegisterKeyCallback( int key, int action, KeyCallback callback ) {
@@ -79,4 +92,8 @@ void Input_CleanUp() {
         current = next;
         next = current->pNext;
     }
+}
+
+bool Input_IsMouseCaptured() {
+    return bMouseCaptured;
 }
