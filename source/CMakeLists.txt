@@ -13,4 +13,4 @@ add_executable(fuaekt
                main.c
               )
 
-target_link_libraries(fuaekt glfw ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES})
+target_link_libraries(fuaekt glfw ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES} m)

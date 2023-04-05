@@ -17,7 +17,7 @@ void Window_Create() {
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     glfwMakeContextCurrent( g_pWindow );
-    glfwSwapInterval(1);
+    glfwSwapInterval(0);
 }
 
 void Window_Close() {

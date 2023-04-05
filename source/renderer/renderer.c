@@ -33,7 +33,7 @@ void Renderer_Render() {
     glUseProgram( g_iShader );
 
     unsigned int transLoc = glGetUniformLocation( g_iShader, "transform" );
-    glUniformMatrix4fv( transLoc, 1, GL_FALSE, g_pPlayer->mat4->array );
+    glUniformMatrix4fv( transLoc, 1, GL_TRUE, g_pPlayer->mat4->array );
 
     for( int i = 0; i < g_mapInfo.numMeshes; i++ ) {
         Mesh_t mesh = g_mapInfo.meshes[i];
