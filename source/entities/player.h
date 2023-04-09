@@ -14,7 +14,7 @@ typedef struct {
 
     // Private
     Vector3f v3CameraOffset;
-    Matrix_t *mat4;
+    Matrix4_t m4ViewMatrix;
 
     // Collider
     float fRadius;

@@ -1,12 +1,15 @@
 #include "player.h"
 
 #include <stdlib.h>
+#include <math.h>
 #include <GL/glew.h>
 #include <GL/gl.h>
 #include <GLFW/glfw3.h>
 
 #include "core/logging.h"
 #include "input/input.h"
+#include "renderer/window.h"
+#include "utils/math.h"
 
 Player_t *g_pPlayer;
 
@@ -44,7 +47,7 @@ void Player_Create( Vector3f origin, Vector3f angles, float radius ) {
     g_pPlayer->v3Origin = origin;
     g_pPlayer->v3Angles = angles;
     g_pPlayer->fRadius = radius;
-    g_pPlayer->mat4 = Matrix_New( 4, 4 );
+    // g_pPlayer->mat4 = Matrix_New( 4, 4 );
 
     g_pPlayer->iForward = 0;
     g_pPlayer->iBackward = 0;
@@ -57,21 +60,53 @@ void Player_Update( float delta ) {
     if( !g_pPlayer )
         return;
 
-    g_pPlayer->v3Origin.z += delta * g_pPlayer->fSpeed * ( g_pPlayer->iForward - g_pPlayer->iBackward );
-    g_pPlayer->v3Origin.x += delta * g_pPlayer->fSpeed * ( g_pPlayer->iLeft - g_pPlayer->iRight );
+    // Update rotation
+    if( Input_IsMouseCaptured() ) {
+        static double dXPos, dYPos;
+        double xPos, yPos;
+        glfwGetCursorPos( g_pWindow, &xPos, &yPos);
 
-    // Log_Info( "%f\n", g_pPlayer->v3Origin.z );
+        dXPos = dXPos - xPos;
+        dYPos = dYPos - yPos;
+
+
+        g_pPlayer->v3Angles.x += dXPos;
+        g_pPlayer->v3Angles.y -= dYPos;
+
+        g_pPlayer->v3Angles.y = g_pPlayer->v3Angles.y > 0.0f ? 0.0f : g_pPlayer->v3Angles.y;
+        g_pPlayer->v3Angles.y = g_pPlayer->v3Angles.y < -180.0f ? -180.0f : g_pPlayer->v3Angles.y;
+
+        dXPos = xPos;
+        dYPos = yPos;
+    }
+
+    // Update position
+    float sf = sin( DegToRad( g_pPlayer->v3Angles.x + 90.0f) );
+    float cf = cos( DegToRad( g_pPlayer->v3Angles.x + 90.0f) );
+
+    float ss = sin( DegToRad( g_pPlayer->v3Angles.x ) );
+    float cs = cos( DegToRad( g_pPlayer->v3Angles.x ) );
+    
+    g_pPlayer->v3Origin.y += delta * g_pPlayer->fSpeed * ( g_pPlayer->iBackward - g_pPlayer->iForward ) * sf;
+    g_pPlayer->v3Origin.x += delta * g_pPlayer->fSpeed * ( g_pPlayer->iBackward - g_pPlayer->iForward ) * cf;
+    
+    g_pPlayer->v3Origin.y += delta * g_pPlayer->fSpeed * ( g_pPlayer->iLeft - g_pPlayer->iRight ) * ss;
+    g_pPlayer->v3Origin.x += delta * g_pPlayer->fSpeed * ( g_pPlayer->iLeft - g_pPlayer->iRight ) * cs;
 }
 
 void Player_UpdateViewMatrix() {
     if( !g_pPlayer )
         return;
 
-    Matrix_Perspective( g_pPlayer->mat4 );
-    Matrix_Translate( g_pPlayer->mat4, g_pPlayer->v3Origin.x, g_pPlayer->v3Origin.y, g_pPlayer->v3Origin.z );
+    Matrix_Perspective( g_pPlayer->m4ViewMatrix );
+
+    Matrix_Rotate( g_pPlayer->m4ViewMatrix, DegToRad( g_pPlayer->v3Angles.y ), Vector3f_New( 1.0f, 0.0f, 0.0f ) );
+    Matrix_Rotate( g_pPlayer->m4ViewMatrix, DegToRad( -g_pPlayer->v3Angles.x ), Vector3f_New( 0.0f, 0.0f, 1.0f ) );
+
+
+    Matrix_Translate( g_pPlayer->m4ViewMatrix, g_pPlayer->v3Origin.x, g_pPlayer->v3Origin.y, g_pPlayer->v3Origin.z );
 }
 
 void Player_Delete() {
-    free(g_pPlayer->mat4);
     free(g_pPlayer);
 }
