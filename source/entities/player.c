@@ -1,6 +1,7 @@
 #include "player.h"
 
 #include <stdlib.h>
+#include <stdbool.h>
 #include <math.h>
 #include <GL/glew.h>
 #include <GL/gl.h>
@@ -61,6 +62,7 @@ void Player_Update( float delta ) {
         return;
 
     // Update rotation
+    static bool ignore = true;
     if( Input_IsMouseCaptured() ) {
         static double dXPos, dYPos;
         double xPos, yPos;
@@ -69,15 +71,20 @@ void Player_Update( float delta ) {
         dXPos = dXPos - xPos;
         dYPos = dYPos - yPos;
 
+        if( !ignore ) {
+            g_pPlayer->v3Angles.x += dXPos;
+            g_pPlayer->v3Angles.y -= dYPos;
 
-        g_pPlayer->v3Angles.x += dXPos;
-        g_pPlayer->v3Angles.y -= dYPos;
+            g_pPlayer->v3Angles.y = g_pPlayer->v3Angles.y > 0.0f ? 0.0f : g_pPlayer->v3Angles.y;
+            g_pPlayer->v3Angles.y = g_pPlayer->v3Angles.y < -180.0f ? -180.0f : g_pPlayer->v3Angles.y;
+        }
 
-        g_pPlayer->v3Angles.y = g_pPlayer->v3Angles.y > 0.0f ? 0.0f : g_pPlayer->v3Angles.y;
-        g_pPlayer->v3Angles.y = g_pPlayer->v3Angles.y < -180.0f ? -180.0f : g_pPlayer->v3Angles.y;
+        ignore = false;
 
         dXPos = xPos;
         dYPos = yPos;
+    } else {
+        ignore = true;
     }
 
     // Update position
