@@ -7,6 +7,7 @@ add_executable(fuaekt
                map/map.c
                material/material.c
                material/shader.c
+               physics/physics.c
                renderer/renderer.c
                renderer/window.c
                utils/math.c

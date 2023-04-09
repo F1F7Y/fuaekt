@@ -12,6 +12,8 @@
 typedef struct {
     int numMeshes;
     Mesh_t *meshes;
+    int numBrushes;
+    Brush_t *brushes;
     GLuint vertexBuffer;
     GLuint indexBuffer;
 } MapInfo_t;

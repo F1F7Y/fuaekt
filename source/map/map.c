@@ -38,6 +38,7 @@ void Map_LoadMap( const char *map ) {
 
     FILE *pMap = SafeOpenFile( map, "rb" );
 
+    // Read and verify header
     Header_t header;
     fread( &header, sizeof(header), 1, pMap);
 
@@ -47,6 +48,7 @@ void Map_LoadMap( const char *map ) {
     if( header.version != 1 )
         ThrowError( "Map has unsupported version!" );
 
+    // Read render related lumps
     Vector3f vertices[header.lumps[VERTICES].length/sizeof(Vector3f)];
     fseek( pMap, header.lumps[VERTICES].offset, SEEK_SET );
     fread( vertices, sizeof(Vector3f), header.lumps[VERTICES].length/sizeof(Vector3f), pMap );
@@ -68,20 +70,19 @@ void Map_LoadMap( const char *map ) {
         glVertices[i].uv = renderVertices[i].uv;
     }
 
-    int vertexBuffer;
-    glGenBuffers( 1, &vertexBuffer );
-    glBindBuffer( GL_ARRAY_BUFFER, vertexBuffer );
+    // Bind new vertex buffer
+    glGenBuffers( 1, &g_mapInfo.vertexBuffer );
+    glBindBuffer( GL_ARRAY_BUFFER, g_mapInfo.vertexBuffer );
     glBufferData( GL_ARRAY_BUFFER, sizeof( GLVertex_t ) * numVertices, glVertices, GL_STATIC_DRAW );
 
-    // 
     int numTriangles = header.lumps[TRIANGLE_INDICES].length/sizeof(int16_t);
     int16_t triangleIndices[numTriangles];
     fseek( pMap, header.lumps[TRIANGLE_INDICES].offset, SEEK_SET );
     fread( triangleIndices, sizeof(int16_t), numTriangles, pMap );
 
-    int indexBuffer;
-    glGenBuffers( 1, &indexBuffer );
-    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, indexBuffer );
+    // Bind new index buffer
+    glGenBuffers( 1, &g_mapInfo.indexBuffer );
+    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, g_mapInfo.indexBuffer );
     glBufferData( GL_ELEMENT_ARRAY_BUFFER, sizeof(int16_t) * numTriangles, triangleIndices, GL_STATIC_DRAW );
 
     glUseProgram( g_iShader );
@@ -93,15 +94,21 @@ void Map_LoadMap( const char *map ) {
     glVertexAttribPointer( 2, 2, GL_FLOAT, GL_FALSE, sizeof( GLVertex_t ), (void*)offsetof( GLVertex_t, uv ) );
     glEnableVertexAttribArray( 2 );
 
+    // Load mehses
     int numMeshes = header.lumps[MESHES].length/sizeof(Mesh_t);
-    Mesh_t meshes[numMeshes];
     fseek( pMap, header.lumps[MESHES].offset, SEEK_SET );
-    fread( meshes, sizeof(Mesh_t), numMeshes, pMap );
-
-    g_mapInfo.numMeshes = numMeshes;
     g_mapInfo.meshes = malloc( sizeof(Mesh_t) * numMeshes);
-    memcpy( g_mapInfo.meshes, meshes, sizeof(Mesh_t) * numMeshes );
+    fread( g_mapInfo.meshes, sizeof(Mesh_t), numMeshes, pMap );
+    g_mapInfo.numMeshes = numMeshes;
 
+    // Load collision related lumps
+    int numBrushes = header.lumps[BRUSHES].length/sizeof(Brush_t);
+    fseek( pMap, header.lumps[BRUSHES].offset, SEEK_SET );
+    g_mapInfo.brushes = malloc( sizeof(Brush_t) * numBrushes );
+    fread( g_mapInfo.brushes, sizeof(Brush_t), numBrushes, pMap );
+    g_mapInfo.numBrushes = numBrushes;
+
+    // Close map and log some information about it
     fclose( pMap );
 
     Log_Info( "Map has: %i meshes\n", g_mapInfo.numMeshes );
@@ -116,4 +123,7 @@ void Map_UnLoad() {
     Log_Info( "Map Unload\n" );
     Player_Delete();
     free( g_mapInfo.meshes );
+    g_mapInfo.numMeshes = 0;
+    free( g_mapInfo.brushes );
+    g_mapInfo.numBrushes = 0;
 }

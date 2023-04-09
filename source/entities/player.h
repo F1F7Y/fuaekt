@@ -7,6 +7,7 @@ typedef struct {
     // Globals
     Vector3f v3Origin;
     Vector3f v3Angles;
+    Vector3f v3Velocity;
 
     // Input
     int iForward, iBackward, iLeft, iRight;
@@ -24,7 +25,9 @@ extern Player_t *g_pPlayer;
 
 void Player_Initilaze();
 void Player_Create( Vector3f origin, Vector3f angles, float radius );
-void Player_Update( float delta );
+void Player_UpdateAngles( float delta );
+void Player_UpdateVelocity( float delta );
+void Player_UpdateOrigin( float delta );
 void Player_UpdateViewMatrix();
 void Player_Delete();
 

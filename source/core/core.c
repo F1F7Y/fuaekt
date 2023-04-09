@@ -12,6 +12,7 @@
 #include "map/map.h"
 #include "material/material.h"
 #include "material/shader.h"
+#include "physics/physics.h"
 #include "renderer/renderer.h"
 #include "renderer/window.h"
 #include "utils/math.h"
@@ -31,7 +32,7 @@ void Core_Initilaze() {
     Material_CreateErrorMaterial();
 
     // Load first map
-    Map_LoadMap( "maps/test.bsp" );
+    Map_LoadMap( "maps/box.bsp" );
 }
 
 void Core_MainLoop() {
@@ -43,7 +44,12 @@ void Core_MainLoop() {
 
         glfwPollEvents();
 
-        Player_Update( fLastDelta );
+        Player_UpdateAngles( fLastDelta );
+        Player_UpdateVelocity( fLastDelta );
+
+        Physics_CheckPlayerAgainstMap();
+
+        Player_UpdateOrigin( fLastDelta );
         Player_UpdateViewMatrix();
 
         Renderer_Render();

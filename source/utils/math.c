@@ -25,6 +25,10 @@ Vector3f Vector3f_New( float x, float y, float z ) {
     return vec;
 }
 
+float Vector3f_Distance( Vector3f a, Vector3f b ) {
+    return sqrt( (a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y) + (a.z - b.z) * (a.z - b.z) );
+}
+
 
 void Matrix_Zero( Matrix4_t mat ) {
     memset( mat, 0, sizeof(float) * 4 * 4 );
@@ -50,10 +54,10 @@ void Matrix_Perspective( Matrix4_t mat ) {
 // 2 6 10 14
 // 3 7 11 15
 void Matrix_Translate( Matrix4_t mat, float x, float y, float z ) {
-    mat[3][0] = mat[0][0] * x + mat[1][0] * y + mat[2][0] * z + mat[3][0];
-    mat[3][1] = mat[0][1] * x + mat[1][1] * y + mat[2][1] * z + mat[3][1];
-    mat[3][2] = mat[0][2] * x + mat[1][2] * y + mat[2][2] * z + mat[3][2];
-    mat[3][3] = mat[0][3] * x + mat[1][3] * y + mat[2][3] * z + mat[3][3];
+    mat[3][0] = -mat[0][0] * x - mat[1][0] * y - mat[2][0] * z + mat[3][0];
+    mat[3][1] = -mat[0][1] * x - mat[1][1] * y - mat[2][1] * z + mat[3][1];
+    mat[3][2] = -mat[0][2] * x - mat[1][2] * y - mat[2][2] * z + mat[3][2];
+    mat[3][3] = -mat[0][3] * x - mat[1][3] * y - mat[2][3] * z + mat[3][3];
 }
 
 void Matrix_Rotate( Matrix4_t mat, float angle, Vector3f vec ) {

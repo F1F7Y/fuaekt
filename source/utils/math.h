@@ -3,6 +3,11 @@
 
 #include <stdbool.h>
 
+
+#define MAX(a, b) (((a) > (b)) ? (a) : (b))
+#define MIN(a, b) (((a) < (b)) ? (a) : (b))
+
+
 typedef struct {
     float x, y, z;
 } Vector3f;
@@ -19,6 +24,7 @@ float DegToRad( float deg );
 bool FloatCompare( float i, float j );
 
 Vector3f Vector3f_New(float x, float y, float z);
+float Vector3f_Distance( Vector3f a, Vector3f b );
 
 void Matrix_Zero( Matrix4_t mat );
 void Matrix_Perspective( Matrix4_t mat );

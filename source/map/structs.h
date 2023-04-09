@@ -62,8 +62,8 @@ typedef struct {
 } TriangleIndex_t;
 
 typedef struct {
-    float mins[3];
-    float maxs[3];
+    Vector3f mins;
+    Vector3f maxs;
     uint16_t firstTri;
     uint16_t numTris;
     int32_t textureIdx;
@@ -74,8 +74,8 @@ typedef struct {
 } BrushPlaneIndex_t;
 
 typedef struct {
-    float mins[3];
-    float maxs[3];
+    Vector3f mins;
+    Vector3f maxs;
     int16_t firstPlaneIdx;
     int16_t numPlaneIdxs;
 } Brush_t;

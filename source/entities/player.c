@@ -57,7 +57,7 @@ void Player_Create( Vector3f origin, Vector3f angles, float radius ) {
     g_pPlayer->fSpeed = 300.0f;
 }
 
-void Player_Update( float delta ) {
+void Player_UpdateAngles( float delta ) {
     if( !g_pPlayer )
         return;
 
@@ -86,6 +86,11 @@ void Player_Update( float delta ) {
     } else {
         ignore = true;
     }
+}
+
+void Player_UpdateVelocity( float delta ) {
+    if( !g_pPlayer )
+        return;
 
     // Update position
     float sf = sin( DegToRad( g_pPlayer->v3Angles.x + 90.0f) );
@@ -94,11 +99,22 @@ void Player_Update( float delta ) {
     float ss = sin( DegToRad( g_pPlayer->v3Angles.x ) );
     float cs = cos( DegToRad( g_pPlayer->v3Angles.x ) );
     
-    g_pPlayer->v3Origin.y += delta * g_pPlayer->fSpeed * ( g_pPlayer->iBackward - g_pPlayer->iForward ) * sf;
-    g_pPlayer->v3Origin.x += delta * g_pPlayer->fSpeed * ( g_pPlayer->iBackward - g_pPlayer->iForward ) * cf;
+    g_pPlayer->v3Velocity.y += delta * g_pPlayer->fSpeed * ( g_pPlayer->iForward - g_pPlayer->iBackward ) * sf;
+    g_pPlayer->v3Velocity.x += delta * g_pPlayer->fSpeed * ( g_pPlayer->iForward - g_pPlayer->iBackward ) * cf;
     
-    g_pPlayer->v3Origin.y += delta * g_pPlayer->fSpeed * ( g_pPlayer->iLeft - g_pPlayer->iRight ) * ss;
-    g_pPlayer->v3Origin.x += delta * g_pPlayer->fSpeed * ( g_pPlayer->iLeft - g_pPlayer->iRight ) * cs;
+    g_pPlayer->v3Velocity.y += delta * g_pPlayer->fSpeed * ( g_pPlayer->iRight - g_pPlayer->iLeft ) * ss;
+    g_pPlayer->v3Velocity.x += delta * g_pPlayer->fSpeed * ( g_pPlayer->iRight - g_pPlayer->iLeft ) * cs;
+
+    // g_pPlayer->v3Velocity.z -= delta * 90.0f;
+}
+
+void Player_UpdateOrigin( float delta ) {
+    if( !g_pPlayer )
+        return;
+
+    g_pPlayer->v3Origin.x += delta * g_pPlayer->v3Velocity.x;
+    g_pPlayer->v3Origin.y += delta * g_pPlayer->v3Velocity.y;
+    g_pPlayer->v3Origin.z += delta * g_pPlayer->v3Velocity.z;
 }
 
 void Player_UpdateViewMatrix() {
