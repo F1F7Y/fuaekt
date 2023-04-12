@@ -108,6 +108,18 @@ void Map_LoadMap( const char *map ) {
     fread( g_mapInfo.brushes, sizeof(Brush_t), numBrushes, pMap );
     g_mapInfo.numBrushes = numBrushes;
 
+    int numPlanes = header.lumps[PLANES].length/sizeof(Plane_t);
+    fseek( pMap, header.lumps[PLANES].offset, SEEK_SET );
+    g_mapInfo.planes = malloc( sizeof(Plane_t) * numPlanes );
+    fread( g_mapInfo.planes, sizeof(Plane_t), numPlanes, pMap );
+    g_mapInfo.numPlanes = numPlanes;
+
+    int numPlaneOffsets = header.lumps[PLANE_INDICES].length/sizeof(int16_t);
+    fseek( pMap, header.lumps[PLANE_INDICES].offset, SEEK_SET );
+    g_mapInfo.planeOffsets = malloc( sizeof(int16_t) * numPlaneOffsets );
+    fread( g_mapInfo.planeOffsets, sizeof(int16_t), numPlaneOffsets, pMap );
+    g_mapInfo.numPlaneOffsets = numPlaneOffsets;
+
     // Close map and log some information about it
     fclose( pMap );
 
