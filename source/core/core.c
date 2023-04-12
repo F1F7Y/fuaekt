@@ -47,7 +47,7 @@ void Core_MainLoop() {
         Player_UpdateAngles( fLastDelta );
         Player_UpdateVelocity( fLastDelta );
 
-        Physics_CheckPlayerAgainstMap();
+        Physics_CheckPlayerAgainstMap( fLastDelta );
 
         Player_UpdateOrigin( fLastDelta );
         Player_UpdateViewMatrix();

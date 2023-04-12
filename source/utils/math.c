@@ -25,6 +25,14 @@ Vector3f Vector3f_New( float x, float y, float z ) {
     return vec;
 }
 
+Vector3f Vector3f_Add( Vector3f vecA, Vector3f vecB ) {
+    return Vector3f_New( vecA.x + vecB.x, vecA.y + vecB.y, vecA.z + vecB.z );
+}
+
+Vector3f Vector3f_MultFloat( Vector3f vec, float f ) {
+    return Vector3f_New( vec.x * f, vec.y * f, vec.z * f );
+}
+
 float Vector3f_Distance( Vector3f a, Vector3f b ) {
     return sqrt( (a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y) + (a.z - b.z) * (a.z - b.z) );
 }
