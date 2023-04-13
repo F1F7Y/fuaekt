@@ -123,11 +123,14 @@ void Map_LoadMap( const char *map ) {
     // Close map and log some information about it
     fclose( pMap );
 
-    Log_Info( "Map has: %i meshes\n", g_mapInfo.numMeshes );
+    Log_Info( "Map has: %i meshes\n",        g_mapInfo.numMeshes );
+    Log_Info( "Map has: %i planes\n",        g_mapInfo.numPlanes );
+    Log_Info( "Map has: %i plane offsets\n", g_mapInfo.numPlaneOffsets );
+    Log_Info( "Map has: %i brushes\n",       g_mapInfo.numBrushes );
 
     Log_Info( "Loading took: %i seconds\n", time(0) - tm );
 
-    Vector3f zero; zero.x = 0.0f; zero.y = 0.0f; zero.z = 0.0f;
+    Vector3f zero; zero.x = 0.0f; zero.y = 0.0f; zero.z = -64.0f;
     Player_Create( zero, zero, 50.0f );
 }
 
@@ -138,4 +141,8 @@ void Map_UnLoad() {
     g_mapInfo.numMeshes = 0;
     free( g_mapInfo.brushes );
     g_mapInfo.numBrushes = 0;
+    free( g_mapInfo.planes );
+    g_mapInfo.numPlanes = 0;
+    free( g_mapInfo.planeOffsets );
+    g_mapInfo.numPlaneOffsets = 0;
 }

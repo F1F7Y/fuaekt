@@ -29,6 +29,24 @@ Vector3f Vector3f_Add( Vector3f vecA, Vector3f vecB ) {
     return Vector3f_New( vecA.x + vecB.x, vecA.y + vecB.y, vecA.z + vecB.z );
 }
 
+Vector3f Vector3f_Normalize( Vector3f vec ) {
+    float size = sqrt( vec.x * vec.x + vec.y * vec.y + vec.z * vec.z );
+
+    vec.x /= size;
+    vec.y /= size;
+    vec.z /= size;
+
+    return vec;
+}
+
+Vector3f Vector3f_Cross( Vector3f vecA, Vector3f vecB ) {
+    Vector3f vec = Vector3f_New( 0.0f, 0.0f, 0.0f );
+    vec.x = vecA.y * vecB.z - vecA.z * vecB.y;
+    vec.y = vecA.z * vecB.x - vecA.x * vecB.z;
+    vec.z = vecA.x * vecB.y - vecA.y * vecB.x;
+    return vec;
+}
+
 Vector3f Vector3f_MultFloat( Vector3f vec, float f ) {
     return Vector3f_New( vec.x * f, vec.y * f, vec.z * f );
 }

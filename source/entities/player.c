@@ -24,7 +24,7 @@ static void PlayerCallback_MoveBackward_End() { if( g_pPlayer != NULL ) { g_pPla
 static void PlayerCallback_MoveLeft_End()     { if( g_pPlayer != NULL ) { g_pPlayer->iLeft = 0; } }
 static void PlayerCallback_MoveRight_End()    { if( g_pPlayer != NULL ) { g_pPlayer->iRight = 0; } }
 
-static void PlayerCallback_MoveJump()     {  }
+static void PlayerCallback_MoveJump()     { if( g_pPlayer != NULL ) { g_pPlayer->v3Velocity.z += 90.0f; } }
 
 
 void Player_Initilaze() {
@@ -105,7 +105,7 @@ void Player_UpdateVelocity( float delta ) {
     g_pPlayer->v3Velocity.y += delta * g_pPlayer->fSpeed * ( g_pPlayer->iRight - g_pPlayer->iLeft ) * ss;
     g_pPlayer->v3Velocity.x += delta * g_pPlayer->fSpeed * ( g_pPlayer->iRight - g_pPlayer->iLeft ) * cs;
 
-    // g_pPlayer->v3Velocity.z -= delta * 90.0f;
+    g_pPlayer->v3Velocity.z -= delta * 90.0f;
 }
 
 void Player_UpdateOrigin( float delta ) {
