@@ -24,7 +24,7 @@ static void PlayerCallback_MoveBackward_End() { if( g_pPlayer != NULL ) { g_pPla
 static void PlayerCallback_MoveLeft_End()     { if( g_pPlayer != NULL ) { g_pPlayer->iLeft = 0; } }
 static void PlayerCallback_MoveRight_End()    { if( g_pPlayer != NULL ) { g_pPlayer->iRight = 0; } }
 
-static void PlayerCallback_MoveJump()     { if( g_pPlayer != NULL ) { g_pPlayer->v3Velocity.z += 90.0f; } }
+static void PlayerCallback_MoveJump()     { if( g_pPlayer != NULL ) { g_pPlayer->v3Velocity.z += 190.0f; } }
 
 
 void Player_Initilaze() {
@@ -105,7 +105,7 @@ void Player_UpdateVelocity( float delta ) {
     g_pPlayer->v3Velocity.y += delta * g_pPlayer->fSpeed * ( g_pPlayer->iRight - g_pPlayer->iLeft ) * ss;
     g_pPlayer->v3Velocity.x += delta * g_pPlayer->fSpeed * ( g_pPlayer->iRight - g_pPlayer->iLeft ) * cs;
 
-    g_pPlayer->v3Velocity.z -= delta * 90.0f;
+    g_pPlayer->v3Velocity.z -= delta * 240.0f;
 }
 
 void Player_UpdateOrigin( float delta ) {
@@ -125,6 +125,7 @@ void Player_UpdateViewMatrix() {
 
     Matrix_Rotate( g_pPlayer->m4ViewMatrix, DegToRad( g_pPlayer->v3Angles.y ), Vector3f_New( 1.0f, 0.0f, 0.0f ) );
     Matrix_Rotate( g_pPlayer->m4ViewMatrix, DegToRad( -g_pPlayer->v3Angles.x ), Vector3f_New( 0.0f, 0.0f, 1.0f ) );
+    // Matrix_Rotate( g_pPlayer->m4ViewMatrix, DegToRad( 5.0f ), Vector3f_New( 0.0f, 1.0f, 0.0f ) );
 
 
     Matrix_Translate( g_pPlayer->m4ViewMatrix, g_pPlayer->v3Origin.x, g_pPlayer->v3Origin.y, g_pPlayer->v3Origin.z );
