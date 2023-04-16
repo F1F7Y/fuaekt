@@ -50,7 +50,7 @@ void Core_MainLoop() {
         Physics_CheckPlayerAgainstMap( fLastDelta );
 
         Player_UpdateOrigin( fLastDelta );
-        Player_UpdateViewMatrix();
+        Player_UpdateViewMatrix( fLastDelta );
 
         Renderer_Render();
 

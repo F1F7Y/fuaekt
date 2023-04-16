@@ -28,7 +28,7 @@ void Player_Create( Vector3f origin, Vector3f angles, float radius );
 void Player_UpdateAngles( float delta );
 void Player_UpdateVelocity( float delta );
 void Player_UpdateOrigin( float delta );
-void Player_UpdateViewMatrix();
+void Player_UpdateViewMatrix( float delta );
 void Player_Delete();
 
 #endif // _PLAYER

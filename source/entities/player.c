@@ -117,15 +117,23 @@ void Player_UpdateOrigin( float delta ) {
     g_pPlayer->v3Origin.z += delta * g_pPlayer->v3Velocity.z;
 }
 
-void Player_UpdateViewMatrix() {
+void Player_UpdateViewMatrix( float delta ) {
     if( !g_pPlayer )
         return;
 
     Matrix_Perspective( g_pPlayer->m4ViewMatrix );
 
     Matrix_Rotate( g_pPlayer->m4ViewMatrix, DegToRad( g_pPlayer->v3Angles.y ), Vector3f_New( 1.0f, 0.0f, 0.0f ) );
+    static float fSway = 0.0f;
+    fSway += ( g_pPlayer->iLeft - g_pPlayer->iRight ) * delta * 20.0f;
+    fSway += fSway * delta * -2.0f;
+
+    // Clamp
+    fSway = fSway > 3.0f ? 3.0f : fSway;
+    fSway = fSway < -3.0f ? -3.0f : fSway;
+    
+    Matrix_Rotate( g_pPlayer->m4ViewMatrix, DegToRad( fSway ), Vector3f_New( 0.0f, 1.0f, 0.0f ) );
     Matrix_Rotate( g_pPlayer->m4ViewMatrix, DegToRad( -g_pPlayer->v3Angles.x ), Vector3f_New( 0.0f, 0.0f, 1.0f ) );
-    // Matrix_Rotate( g_pPlayer->m4ViewMatrix, DegToRad( 5.0f ), Vector3f_New( 0.0f, 1.0f, 0.0f ) );
 
 
     Matrix_Translate( g_pPlayer->m4ViewMatrix, g_pPlayer->v3Origin.x, g_pPlayer->v3Origin.y, g_pPlayer->v3Origin.z );
