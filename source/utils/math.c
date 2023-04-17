@@ -47,6 +47,10 @@ Vector3f Vector3f_Cross( Vector3f vecA, Vector3f vecB ) {
     return vec;
 }
 
+float Vector3f_Dot( Vector3f vecA, Vector3f vecB ) {
+    return vecA.x * vecB.x + vecA.y * vecB.y + vecA.z * vecB.z;
+}
+
 Vector3f Vector3f_MultFloat( Vector3f vec, float f ) {
     return Vector3f_New( vec.x * f, vec.y * f, vec.z * f );
 }

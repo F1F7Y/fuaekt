@@ -27,6 +27,7 @@ Vector3f Vector3f_New(float x, float y, float z);
 Vector3f Vector3f_Add( Vector3f vecA, Vector3f vecB );
 Vector3f Vector3f_Normalize( Vector3f vec );
 Vector3f Vector3f_Cross( Vector3f vecA, Vector3f vecB );
+float Vector3f_Dot( Vector3f vecA, Vector3f vecB );
 Vector3f Vector3f_MultFloat( Vector3f vec, float f );
 float Vector3f_Distance( Vector3f a, Vector3f b );
 
