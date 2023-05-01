@@ -8,6 +8,7 @@
 #include "entities/player.h"
 #include "filesystem/filesystem.h"
 #include "material/shader.h"
+#include "material/material.h"
 #include "utils/math.h"
 
 
@@ -94,12 +95,22 @@ void Map_LoadMap( const char *map ) {
     glVertexAttribPointer( 2, 2, GL_FLOAT, GL_FALSE, sizeof( GLVertex_t ), (void*)offsetof( GLVertex_t, uv ) );
     glEnableVertexAttribArray( 2 );
 
+    int numTextures = header.lumps[TEXTURE_DATAS].length/sizeof(TextureData_t);
+    TextureData_t textures[numTextures];
+    fseek( pMap, header.lumps[TEXTURE_DATAS].offset, SEEK_SET );
+    fread( textures, sizeof(TextureData_t), numTextures, pMap );
+
     // Load mehses
     int numMeshes = header.lumps[MESHES].length/sizeof(Mesh_t);
     fseek( pMap, header.lumps[MESHES].offset, SEEK_SET );
     g_mapInfo.meshes = malloc( sizeof(Mesh_t) * numMeshes);
     fread( g_mapInfo.meshes, sizeof(Mesh_t), numMeshes, pMap );
     g_mapInfo.numMeshes = numMeshes;
+
+    for( int i = 0; i < numMeshes; i++ )
+    {
+        g_mapInfo.meshes[i].textureIdx = Material_GetGLRef(textures[g_mapInfo.meshes[i].textureIdx].path);
+    }
 
     // Load collision related lumps
     int numBrushes = header.lumps[BRUSHES].length/sizeof(Brush_t);

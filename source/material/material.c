@@ -92,7 +92,7 @@ void Material_LoadMaterials() {
         fclose(pFile);
         
         NamedMaterial_t *material = malloc(sizeof(NamedMaterial_t));
-        strncpy(material->name, buffer, 256 );
+        strncpy(material->name, ent->d_name, 256 );
         material->material.width = header.width;
         material->material.height = header.height;
 
@@ -114,6 +114,17 @@ void Material_LoadMaterials() {
 
 GLuint Material_GetGLRef( const char *material ) {
 
-    Log_Info( "Couldn't find %s, using error material instead!", material );
+    for( int i = 0; i < 128; i++ )
+    {
+        NamedMaterial_t *mat = loadedMaterials[i];
+
+        if( !mat )
+            break;
+
+        if( strncmp( mat->name, GetPathFilename((char*)material), 256 ) == 0 )
+            return mat->material.texture;
+    }
+
+    Log_Info( "Couldn't find %s, using error material instead!\n", GetPathFilename((char*)material) );
     return Material_GetErrorMaterial();
 }

@@ -48,7 +48,7 @@ typedef struct {
 } VertexNormal_t;
 
 typedef struct {
-    int16_t index;
+    char path[256];
 } TextureData_t;
 
 typedef struct {

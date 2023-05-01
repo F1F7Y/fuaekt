@@ -10,6 +10,6 @@ FILE *SafeOpenFile( const char *filename, const char *mode );
 void Directory_IteratorStart( const char *path );
 bool Directory_Iterate();
 struct dirent *Directory_GetIteratorValue();
-
+char *GetPathFilename( char *path );
 
 #endif // _FILESYSTEM

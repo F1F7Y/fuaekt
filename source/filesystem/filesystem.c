@@ -34,3 +34,21 @@ bool Directory_Iterate() {
 struct dirent *Directory_GetIteratorValue() {
     return ent;
 }
+
+char *GetPathFilename( char *path )
+{
+    char *firstChar = path;
+    char *lastSep = path;
+
+    while( *path != '\0' )
+    {
+        if( *path == '/' )
+            lastSep = path;
+        
+        path++;
+    }
+
+    lastSep++;
+
+    return lastSep;
+}

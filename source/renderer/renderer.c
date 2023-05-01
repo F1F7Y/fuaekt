@@ -43,7 +43,7 @@ void Renderer_Render() {
         glUniform1i( texLoc, 0 );
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
-        glBindTexture( GL_TEXTURE_2D, Material_GetErrorMaterial() );
+        glBindTexture( GL_TEXTURE_2D, mesh.textureIdx );
 
 
         glDrawElements( GL_TRIANGLES, mesh.numTris, GL_UNSIGNED_SHORT, (void*)(sizeof(int16_t) * mesh.firstTri ) );
