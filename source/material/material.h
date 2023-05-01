@@ -13,5 +13,6 @@ typedef struct {
 
 void Material_CreateErrorMaterial();
 GLuint Material_GetErrorMaterial();
+void Material_LoadMaterials();
 
 #endif // _MATERIAL

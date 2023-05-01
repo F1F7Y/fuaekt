@@ -1,6 +1,7 @@
 #include "material.h"
 
 #include "core/logging.h"
+#include "filesystem/filesystem.h"
 
 Material_t errorMaterial;
 
@@ -39,4 +40,16 @@ void Material_CreateErrorMaterial() {
 
 GLuint Material_GetErrorMaterial() {
     return errorMaterial.texture;
+}
+
+void Material_LoadMaterials() {
+    for( Directory_IteratorStart("materials/"); Directory_Iterate(); ) {
+        struct dirent *ent = Directory_GetIteratorValue();
+
+        // Skip "." and ".."
+        if( *ent->d_name == '.' )
+            continue;
+        
+        Log_Info( "Loading material: %s\n", ent->d_name );
+    }
 }

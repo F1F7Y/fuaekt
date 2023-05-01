@@ -28,6 +28,7 @@ void Core_Initilaze() {
     Input_Initilaze();
     Player_Initilaze();
 
+    Material_LoadMaterials();
     Shader_LoadDefault();
     Material_CreateErrorMaterial();
 
