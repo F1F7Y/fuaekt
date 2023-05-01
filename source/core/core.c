@@ -28,9 +28,10 @@ void Core_Initilaze() {
     Input_Initilaze();
     Player_Initilaze();
 
+    Material_Init();
+    Material_CreateErrorMaterial();
     Material_LoadMaterials();
     Shader_LoadDefault();
-    Material_CreateErrorMaterial();
 
     // Load first map
     Map_LoadMap( "maps/box.bsp" );
@@ -67,6 +68,7 @@ void Core_Shutdown() {
 
     Map_UnLoad();
     Input_CleanUp();
+    Material_ShutDown();
 
     glfwTerminate();
 }
