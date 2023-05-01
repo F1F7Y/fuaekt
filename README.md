@@ -1,9 +1,18 @@
 # Uni project
 
 ## Compiling
-- Currently linux only, will do windows when I have time
+
+#### Linux
+- Just uhhh
 ```sh
 cmake . -G "Unix Makefiles"
+cmake --build .
+```
+
+#### Windows
+- Using msys
+```sh
+cmake . -G "MinGW Makefiles"
 cmake --build .
 ```
 
