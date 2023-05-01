@@ -30,6 +30,7 @@ static void PlayerCallback_MoveJump()     { if( g_pPlayer != NULL ) { g_pPlayer-
 void Player_Initilaze() {
     Log_Info( "Registering player key callbacks!\n" );
 
+    // WASD
     Input_RegisterKeyCallback( GLFW_KEY_W, GLFW_PRESS, PlayerCallback_MoveForward_Start );
     Input_RegisterKeyCallback( GLFW_KEY_S, GLFW_PRESS, PlayerCallback_MoveBackward_Start );
     Input_RegisterKeyCallback( GLFW_KEY_A, GLFW_PRESS, PlayerCallback_MoveLeft_Start );
@@ -39,6 +40,17 @@ void Player_Initilaze() {
     Input_RegisterKeyCallback( GLFW_KEY_S, GLFW_RELEASE, PlayerCallback_MoveBackward_End );
     Input_RegisterKeyCallback( GLFW_KEY_A, GLFW_RELEASE, PlayerCallback_MoveLeft_End );
     Input_RegisterKeyCallback( GLFW_KEY_D, GLFW_RELEASE, PlayerCallback_MoveRight_End );
+
+    // ARROW KEYS
+    Input_RegisterKeyCallback( GLFW_KEY_UP, GLFW_PRESS, PlayerCallback_MoveForward_Start );
+    Input_RegisterKeyCallback( GLFW_KEY_DOWN, GLFW_PRESS, PlayerCallback_MoveBackward_Start );
+    Input_RegisterKeyCallback( GLFW_KEY_LEFT, GLFW_PRESS, PlayerCallback_MoveLeft_Start );
+    Input_RegisterKeyCallback( GLFW_KEY_RIGHT, GLFW_PRESS, PlayerCallback_MoveRight_Start );
+
+    Input_RegisterKeyCallback( GLFW_KEY_UP, GLFW_RELEASE, PlayerCallback_MoveForward_End );
+    Input_RegisterKeyCallback( GLFW_KEY_DOWN, GLFW_RELEASE, PlayerCallback_MoveBackward_End );
+    Input_RegisterKeyCallback( GLFW_KEY_LEFT, GLFW_RELEASE, PlayerCallback_MoveLeft_End );
+    Input_RegisterKeyCallback( GLFW_KEY_RIGHT, GLFW_RELEASE, PlayerCallback_MoveRight_End );
 
     Input_RegisterKeyCallback( GLFW_KEY_SPACE, GLFW_PRESS, PlayerCallback_MoveJump );
 }
